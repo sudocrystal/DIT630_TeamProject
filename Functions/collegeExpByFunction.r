@@ -4,7 +4,7 @@ library(reshape2)
 library(ggplot2)
 # library(plyr)
 
-college_df <- read.csv("../Community_Colleges_-_Budget__Revenue__Expenditure_-_Detail_Data.csv")
+college_df <- read.csv("Community_Colleges_-_Budget__Revenue__Expenditure_-_Detail_Data.csv")
 # print(head(college_df, n = 2))
 
 collegeBudgets <- function(df) {
@@ -21,7 +21,12 @@ collegeBudgets <- function(df) {
         summarise(Budget=sum(Total), .groups = "drop") %>%
         arrange(Institution) %>%
         as.data.frame()
-    print(head(sums_by_college))
+    #print(head(sums_by_college))
+    
+    ordered_df <- sums_by_college[order(-sums_by_college$Budget), ]
+    
+    # Print the first 5 rows of the ordered data frame
+    print(head(ordered_df))
 
     scatterplot <- ggplot(sums_by_college, aes(x=AcadYear, y=Budget, color=Institution)) + 
                    geom_point()
