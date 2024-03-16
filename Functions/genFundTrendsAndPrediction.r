@@ -15,7 +15,7 @@ genFunds <- function(df) {
     # scatterplot <- ggplot(df, aes(x=AcadYear, y=Total, color=Institution)) + 
     #                geom_point()
     # print(scatterplot)
-    # ggsave(path="figures", filename="Gen Funds by Year.png")
+    ggsave(path="figures/Gen Funds by College", filename="__Gen Funds by Year.png")
 
 
     years <- sort(unique(df[, 1]))
