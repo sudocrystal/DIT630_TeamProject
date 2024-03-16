@@ -38,18 +38,6 @@ genFunds <- function(df) {
 }
 
 revenue <- function(df) {
-    # convert years to numbers for linear model
-    allYears <- sort(unique(df[, 1]))
-    yrNum <- 2007:2021
-    yearsVLookUp <- data.frame(yrStr=allYears, yrNum)
-    # print(head(yearsVLookUp))
-    lookUp <- setNames(yearsVLookUp$yrNum, yearsVLookUp$yrStr)
-    # print(lookUp['2015-16'])
-
-    df <- df %>% 
-    mutate_if(names(.) %in% c("AcadYear"),
-        function(x) lookUp[x])
-
     # reduce dataset to only general funds
     # and group by institution, year, and function
     df <- df %>% filter(Fund=="General Fund") %>%
@@ -83,5 +71,17 @@ revenue <- function(df) {
     }
 }
 
-# genFunds(college_df)
+# convert years to numbers for linear model
+allYears <- sort(unique(college_df[, 1]))
+yrNum <- 2007:2021
+yearsVLookUp <- data.frame(yrStr=allYears, yrNum)
+# print(head(yearsVLookUp))
+lookUp <- setNames(yearsVLookUp$yrNum, yearsVLookUp$yrStr)
+# print(lookUp['2015-16'])
+
+college_df <- college_df %>% 
+mutate_if(names(.) %in% c("AcadYear"),
+    function(x) lookUp[x])
+
+genFunds(college_df)
 revenue(college_df)
